@@ -1,0 +1,103 @@
+.totalEmp{
+    position: fixed;
+    /* background-color: #3f0d12; */
+    /* background-image: linear-gradient(315deg, #2f0000 10%, #ff004c 60%); */
+    background-color: #cccccc;
+    background-image: url('..\\..\\..\\..\\backgroundGif\\emp_Background.gif');
+    background-repeat: repeat;
+    background-size:cover;
+    height:100%;
+    width:100%;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
+.empHeaderLabel { 
+  color: rgba(255,255,255,0.8);
+    left:50%;
+    text-align: center;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 40px;
+    border-radius: 10px;
+    padding: 4px 2px;
+    backdrop-filter: blur(10px);
+    grid-area: usernameLabel;
+}
+
+.containerEmp {  
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: auto;
+    border-radius: 15px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    gap: 30px 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      " pastBtn newBtn"
+      " containerEmpShow containerEmpShow";
+}
+
+.pastBtn {
+    margin: auto;
+    padding: auto;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.6);
+    font-size: 30px;
+    letter-spacing: auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: auto;
+    height: auto;
+    grid-area: pastBtn;
+}
+.pastBtn:hover {
+    background-color: rgba(129, 10, 56, 0.363);
+    color: rgba(255,255,255,1);
+  }
+ .pastBtn:active{
+    background-color: rgba(82, 0, 27, 0.753);
+  }
+
+.newBtn {
+    margin: auto;
+    padding: auto;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.6);
+    font-size: 30px;
+    letter-spacing: auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: auto;
+    height: auto;
+    grid-area: newBtn;
+}
+.newBtn:hover {
+    background-color: rgba(129, 10, 56, 0.363);
+    color: rgba(255,255,255,1);
+}
+.newBtn:active{
+    background-color: rgba(82, 0, 27, 0.753);
+}
+
+.containerEmpShow{
+  margin: auto;
+  grid-area:containerEmpShow;
+}

@@ -1,0 +1,128 @@
+.total{
+    position: fixed;
+    /* background-color: #3f0d12; */
+    /* background-image: linear-gradient(315deg, #2f0000 10%, #ff004c 60%); */
+    background-color: #cccccc;
+    background-image: url('..\\..\\..\\..\\backgroundGif\\background.gif');
+    background-repeat: repeat;
+    background-size:cover;
+    height:100%;
+    width:100%;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
+.container {  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: auto;
+    border-radius: 15px;
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 20px 10px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      " usernameLabel usernameInput"
+      " passwordLabel passwordInput"
+      " loginBtn loginBtn ";
+}
+
+.usernameLabel { 
+    color: rgba(255,255,255,0.8);
+    margin: auto;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 40px;
+    border-radius: 10px;
+    padding: 4px 2px;
+    backdrop-filter: blur(10px);
+    grid-area: usernameLabel;
+}
+.usernameInput {
+    display: block;
+    margin: auto;
+    width:95%;
+    padding: 4px, 2px;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 30px;
+    text-align: center;
+    letter-spacing: auto;
+    cursor: pointer;
+    grid-area: usernameInput; 
+}
+.usernameInput:hover {
+    background-color: rgba(255, 255, 255, 0.363);
+    color: rgba(0,0,0,1);
+  }
+ .usernameInput:active{
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+.passwordLabel { 
+    color: rgba(255,255,255,0.8);
+    margin: auto;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 40px;
+    border-radius: 10px;
+    padding: 4px 2px;
+    backdrop-filter: blur(10px);
+    grid-area: passwordLabel; 
+}
+.passwordInput {
+    grid-area: passwordInput;
+    margin: auto;
+    width:95%;
+    padding: 4px, 2px;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 30px;
+    text-align:center;
+    letter-spacing: auto;
+    cursor:pointer;
+}
+.passwordInput:hover {
+    background-color: rgba(255, 255, 255, 0.363);
+    color: rgba(0,0,0,1);
+  }
+ .passwordInput:active{
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+.loginBtn {
+    margin: auto;
+    padding: auto;
+    border-radius: 20px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.8);
+    font-size: 30px;
+    letter-spacing: auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: 90%;
+    height: 90%;
+    grid-area: loginBtn;
+}
+.loginBtn:hover {
+    background-color: rgba(129, 10, 56, 0.363);
+    color: rgba(255,255,255,1);
+  }
+ .loginBtn:active{
+    background-color: rgba(82, 0, 27, 0.753);
+  }
