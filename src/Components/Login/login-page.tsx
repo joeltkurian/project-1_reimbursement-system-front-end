@@ -8,7 +8,6 @@ export default function LoginPage(props) {
 
 
     async function Login() {
-        console.log('BEGIN');
         const loginPayload = {
             username: usernameInput.current.value,
             password: passwordInput.current.value
@@ -35,7 +34,7 @@ export default function LoginPage(props) {
             sessionStorage.setItem("username", account.username);
             sessionStorage.setItem("fname", account.fname);
             sessionStorage.setItem('lname', account.lname);
-            sessionStorage.setItem("id", account.id);
+            sessionStorage.setItem("accountId", account.id);
             sessionStorage.setItem("isManager", account.isManager);
             // props.updateUser({ username: sessionStorage.getItem("username"), isManager: sessionStorage.getItem("isManager") });
             props.updateUser({ username: account.username, isManager: account.isManager === 'false' ? false : true });

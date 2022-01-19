@@ -1,0 +1,205 @@
+.totalMan{
+    position: fixed;
+    /* background-color: #3f0d12; */
+    /* background-image: linear-gradient(315deg, #2f0000 10%, #ff004c 60%); */
+    background-color: #cccccc;
+    background-image: url('..\\..\\..\\..\\backgroundGif\\man_Background.gif');
+    background-repeat: repeat;
+    background-size:cover;
+    height:100%;
+    width:100%;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+}
+
+.manHeaderLabel { 
+  color: rgba(255,255,255,0.8);
+    left:50%;
+    text-align: center;
+    background-color: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 40px;
+    border-radius: 10px;
+    padding: 4px 2px;
+    backdrop-filter: blur(10px);
+}
+
+.containerMan {  
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    background-color: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: auto;
+    border-radius: 15px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    gap: 20px 20px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      " pastManBtn newManBtn"
+      " containerManShow containerManShow";
+}
+.containerManChild {  
+  color: #fff;
+  position: relative;
+  background-color: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  width: auto;
+  border-radius: 15px;
+  padding: 10px;
+  backdrop-filter: blur(10px);
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    " pastManBtn newManBtn"
+    " containerManShow containerManShow";
+}
+
+.pastManBtn {
+    margin: auto;
+    padding: auto;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.6);
+    font-size: 30px;
+    letter-spacing: auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: auto;
+    height: auto;
+    grid-area: pastManBtn;
+}
+.pastManBtn:hover {
+    background-color: rgba(129, 10, 56, 0.363);
+    color: rgba(255,255,255,1);
+  }
+ .pastManBtn:active{
+    background-color: rgba(82, 0, 27, 0.753);
+  }
+
+.newManBtn {
+    margin: auto;
+    padding: auto;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(30px);
+    color: rgba(255,255,255,0.6);
+    font-size: 30px;
+    letter-spacing: auto;
+    cursor: pointer;
+    text-transform: uppercase;
+    width: auto;
+    height: auto;
+    grid-area: newManBtn;
+}
+.newManBtn:hover {
+    background-color: rgba(129, 10, 56, 0.363);
+    color: rgba(255,255,255,1);
+}
+.newManBtn:active{
+    background-color: rgba(82, 0, 27, 0.753);
+}
+.containerManShow{
+  margin: auto;
+  grid-area:containerManShow;
+}
+.reimScroll{
+  margin: auto;
+  max-height:450px;
+  overflow-y:scroll;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.statCommentLabel{
+  margin: auto;
+  padding: auto;
+  color: rgba(255,255,255,0.7);
+  font-size:32px;
+  letter-spacing: auto;
+  cursor:crosshair;
+}
+.containerAPDEN{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    " apprBtn denBtn"
+    " commentInput commentInput";
+}
+.apprBtn{
+  margin: auto;
+  padding: auto;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  letter-spacing: auto;
+  cursor: pointer;
+  text-transform: uppercase;
+  width: auto;
+  height: auto;
+  grid-area:apprBtn;
+}
+.apprBtn:hover {
+  background-color: rgba(50, 50, 50, 0.4);
+  color: rgba(255,255,255,1);
+}
+.apprBtn:active{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.denBtn{
+  margin: auto;
+  padding: auto;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.7);
+  font-size: 18px;
+  letter-spacing: auto;
+  cursor: pointer;
+  text-transform: uppercase;
+  width: auto;
+  height: auto;
+  grid-area:denBtn;
+}
+.denBtn:hover {
+  background-color: rgba(50, 50, 50, 0.4);
+  color: rgba(255,255,255,1);
+}
+.denBtn:active{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+.commentInput{
+  margin: auto;
+  padding: auto;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.7);
+  font-size: 20px;
+  letter-spacing: auto;
+  width: auto;
+  height: auto;
+  grid-area:commentInput;
+}

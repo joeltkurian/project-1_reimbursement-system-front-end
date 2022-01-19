@@ -4,8 +4,10 @@ import PastReimbursement from '../Reimbursement/past-reimbursement';
 import './employee-page.css'
 
 
+
 export default function EmployeePage() {
-    const [switchBtn, setSwitch] = useState(false);
+    const [pastReimburse, setSwitch] = useState(false);
+    const [reimbursement, setReimbursement] = useState([]);
 
     return (<div className='totalEmp'>
         <h1 className='empHeaderLabel'>Welcome Employee: {sessionStorage.getItem('fname')} {sessionStorage.getItem('lname')}</h1>
@@ -14,7 +16,7 @@ export default function EmployeePage() {
             <button onClick={() => { setSwitch(false) }} className='newBtn'>New Reimbursement</button>
             <div className='containerEmpShow'>
                 <>{
-                    switchBtn ? <PastReimbursement /> : <NewReimbursement />
+                    pastReimburse ? <PastReimbursement reimbursement={reimbursement} setReimbursement={setReimbursement} /> : <NewReimbursement />
                 }</>
             </div>
         </div>
