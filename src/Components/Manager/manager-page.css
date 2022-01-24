@@ -28,16 +28,18 @@
 
 .containerMan {  
     color: #fff;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50% , -50%);
     background-color: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.1);
-    width: auto;
+    box-shadow: 5px 5px 10px rgba(0,0,0.2);
+    border: 1px solid rgba(48, 1, 1, 0.1);
+    width: fit-content;
     border-radius: 15px;
     padding: 15px;
     backdrop-filter: blur(10px);
+    overflow:hidden;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
@@ -47,10 +49,12 @@
       " pastManBtn newManBtn"
       " containerManShow containerManShow";
 }
+
 .containerManChild {  
   color: #fff;
   position: relative;
   background-color: rgba(255,255,255,0.03);
+  box-shadow: 0 5px 5px rgba(0,0,0.2);
   border: 1px solid rgba(255,255,255,0.1);
   width: auto;
   border-radius: 15px;
@@ -71,11 +75,12 @@
     padding: auto;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 5px 5px rgba(0,0,0.2);
     backdrop-filter: blur(30px);
     color: rgba(255,255,255,0.6);
     font-size: 30px;
-    letter-spacing: auto;
+    letter-spacing: 0px;
+    transition: 0.5s;
     cursor: pointer;
     text-transform: uppercase;
     width: auto;
@@ -83,11 +88,12 @@
     grid-area: pastManBtn;
 }
 .pastManBtn:hover {
-    background-color: rgba(129, 10, 56, 0.363);
+    background-color: rgba(120, 120, 120, 0.3);
+    letter-spacing: 1px;
     color: rgba(255,255,255,1);
   }
  .pastManBtn:active{
-    background-color: rgba(82, 0, 27, 0.753);
+    background-color: rgba(0, 0, 0, 0.7);
   }
 
 .newManBtn {
@@ -95,9 +101,12 @@
     padding: auto;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 5px 5px rgba(0,0,0.2);
     backdrop-filter: blur(30px);
     color: rgba(255,255,255,0.6);
+    letter-spacing: 0px;
+    transition: 0.5s;
+    transition: 0.5s;
     font-size: 30px;
     letter-spacing: auto;
     cursor: pointer;
@@ -107,11 +116,12 @@
     grid-area: newManBtn;
 }
 .newManBtn:hover {
-    background-color: rgba(129, 10, 56, 0.363);
+  letter-spacing: 1px;
+    background-color: rgba(120, 120, 120, 0.3);
     color: rgba(255,255,255,1);
 }
 .newManBtn:active{
-    background-color: rgba(82, 0, 27, 0.753);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 .containerManShow{
   margin: auto;
@@ -148,7 +158,7 @@
   padding: auto;
   border-radius: 8px;
   background-color: rgba(255,255,255,0.06);
-  border: 1.5px solid rgba(255,255,255,0.1);
+  box-shadow: 0 1px 1px rgba(0,0,0.2);
   backdrop-filter: blur(30px);
   color: rgba(255,255,255,0.7);
   font-size: 18px;
@@ -171,7 +181,7 @@
   padding: auto;
   border-radius: 8px;
   background-color: rgba(255,255,255,0.06);
-  border: 1.5px solid rgba(255,255,255,0.1);
+  box-shadow: 0 1px 1px rgba(0,0,0.2);
   backdrop-filter: blur(30px);
   color: rgba(255,255,255,0.7);
   font-size: 18px;
@@ -202,4 +212,42 @@
   width: auto;
   height: auto;
   grid-area:commentInput;
+}
+
+.containerStat{
+  display: grid;
+  grid-template-columns: auto;
+  overflow-y:scroll;
+  max-height:700px;
+  grid-template-rows: auto auto auto;
+  margin-top: 2%;
+  gap: 5px 5px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    " totAvg"
+    " titleBar"
+    " barChart";
+}
+.titleBar{
+  text-align: center;
+  color:#8884d8;
+  font-size: 30px;
+  margin:auto;
+  grid-area:titleBar;
+}
+.totAvg{
+  display:inline;
+  text-align: center;
+  margin: auto;
+  padding: auto;
+  font-size: 20px;
+  border-radius: 8px;
+  background-color: rgba(255,255,255,0.06);
+  box-shadow: 0 1px 1px rgba(0,0,0.2);
+  backdrop-filter: blur(30px);
+  color: rgba(255,255,255,0.7);
+  grid-area:totAvg;
+}
+.barChart{
+  grid-area:barChart;
 }

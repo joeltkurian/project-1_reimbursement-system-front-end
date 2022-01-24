@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-
-
 export default function NewReimbursement() {
 
     const name = useRef(null);
     const amount = useRef(null);
+    const inputFile = useRef(null);
     const [confirm, setConfirm] = useState('');
 
     async function addReimbursement() {

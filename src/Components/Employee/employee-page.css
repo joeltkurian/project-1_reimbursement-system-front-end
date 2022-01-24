@@ -29,13 +29,15 @@
 
 .containerEmp {  
     color: #fff;
-    position: absolute;
+    position: relative;
+    width:fit-content;
     top: 50%;
     left: 50%;
+    overflow:hidden;
     transform: translate(-50% , -50%);
     background-color: rgba(255,255,255,0.03);
+    box-shadow: 5px 5px 10px rgba(0,0,0.2);
     border: 1px solid rgba(255,255,255,0.1);
-    width: auto;
     border-radius: 15px;
     padding: 15px;
     backdrop-filter: blur(10px);
@@ -54,23 +56,26 @@
     padding: auto;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 5px 5px rgba(0,0,0.2);
     backdrop-filter: blur(30px);
     color: rgba(255,255,255,0.6);
     font-size: 30px;
-    letter-spacing: auto;
+    letter-spacing: 0px;
+    transition: 0.5s;
     cursor: pointer;
     text-transform: uppercase;
+    overflow:hidden;
     width: auto;
     height: auto;
     grid-area: pastBtn;
 }
 .pastBtn:hover {
-    background-color: rgba(129, 10, 56, 0.363);
+  letter-spacing: 1px;
+    background-color: rgba(120, 120, 120, 0.3);
     color: rgba(255,255,255,1);
   }
  .pastBtn:active{
-    background-color: rgba(82, 0, 27, 0.753);
+    background-color: rgba(0, 0, 0, 0.7);
   }
 
 .newBtn {
@@ -78,11 +83,13 @@
     padding: auto;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.1);
+    box-shadow: 0 5px 5px rgba(0,0,0.2);
     backdrop-filter: blur(30px);
+    overflow:hidden;
     color: rgba(255,255,255,0.6);
     font-size: 30px;
-    letter-spacing: auto;
+    letter-spacing: 0px;
+    transition: 0.5s;
     cursor: pointer;
     text-transform: uppercase;
     width: auto;
@@ -90,14 +97,17 @@
     grid-area: newBtn;
 }
 .newBtn:hover {
-    background-color: rgba(129, 10, 56, 0.363);
+  letter-spacing: 1px;
+    background-color: rgba(120, 120, 120, 0.3);
     color: rgba(255,255,255,1);
 }
 .newBtn:active{
-    background-color: rgba(82, 0, 27, 0.753);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .containerEmpShow{
   margin: auto;
+  overflow-y:scroll;
+     max-height:700px;
   grid-area:containerEmpShow;
 }

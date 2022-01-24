@@ -1,5 +1,7 @@
+
 import { useEffect, useRef, useState } from "react";
-import { Reimbursement } from "../../../dtos";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Text, AreaChart, CartesianGrid, Area, Label } from 'recharts';
+import { AccountStatistics, Reimbursement } from "../../../dtos";
 
 export default function ManagerControlPage() {
 
@@ -11,7 +13,7 @@ export default function ManagerControlPage() {
         <button onClick={() => { setStatBtn(true) }} className='newManBtn'>Statistics</button>
         <div className='containerManShow'>
             <>{
-                statBtn ? <h1>Statistics</h1> : <AllReimbursement reimbursement={reimbursement} setReimbursement={setReimbursement} />
+                statBtn ? <StatisticsPage /> : <AllReimbursement reimbursement={reimbursement} setReimbursement={setReimbursement} />
             }</>
         </div>
     </div>);
@@ -19,22 +21,20 @@ export default function ManagerControlPage() {
 
 export function AllReimbursement(props: { reimbursement: Reimbursement[], setReimbursement: Function }) {
 
-    const [renderR, setRenderR] = useState(false);
-    const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} reimb={r} setRenderR={setRenderR} />)
+    const tableRows = props.reimbursement.map((r, i) => <ReimbursementRow key={r.id} reimb={r} setReimb={props.setReimbursement} reimbArr={props.reimbursement} index={i} />)
     // const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
     async function GetAllReimbursements() {
         const accountId = sessionStorage.getItem("accountId");
         const response = await fetch(`http://localhost:5000/reimbursement/${accountId}/true`);
         const reimbursement: Reimbursement[] = await response.json();
-        console.log(reimbursement);
+        //console.log(reimbursement);
         props.setReimbursement(reimbursement);
     }
 
     useEffect(() => {
         GetAllReimbursements();
-        setRenderR(false);
-    }, [renderR]);
+    }, []);
 
     if (props.reimbursement.length != 0) {
         return (<div className="reimScroll">
@@ -44,11 +44,11 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
             </table>
         </div>);
     } else {
-        return (<h1>No Reimbursements Present!</h1>)
+        return (<h1>No Approved Reimbursements Present!</h1>)
     }
 }
 
-export function ReimbursementRow(props: { reimb: Reimbursement, setRenderR: Function }) {
+export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Function, reimbArr: Reimbursement[], index: number }) {
     const { id, name, amount, account, status, statusComment } = props.reimb;
     const [sAndC, setsAndC] = useState(true);
     const commentInput = useRef(null);
@@ -65,10 +65,12 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setRenderR: Func
                     'Content-Type': "application/json"
                 }
             })
-        if (await response.status != 200) {
+        if (response.status != 200) {
             alert(await response.text());
         }
-        props.setRenderR(true);
+        let r = await response.json();
+        props.reimbArr[props.index] = r;
+        props.setReimb([...props.reimbArr]);
     }
 
     return (<tr>
@@ -81,3 +83,107 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setRenderR: Func
                 onMouseLeave={() => { setsAndC(true) }}>{sAndC != true && statusComment ? statusComment : status}</div>}</td>
     </tr>)
 }
+
+//---------------------WORKING------------------------------------------//
+
+export function StatisticsPage() {
+    const [stat, setStat] = useState(null);
+
+    async function getStats() {
+        const response = await fetch(`http://localhost:5000/manager/statistics`);
+        if (response.status === 200) {
+            const stats: AccountStatistics[] = await response.json();
+            setStat(stats);
+        }
+    }
+    useEffect(() => {
+        getStats();
+    }, []);
+
+    return (stat ? <StatStuff stat={stat} /> : <></>)
+}
+
+export function StatStuff(props: { stat: AccountStatistics[] }) {
+
+    const [totAvg, setTotAvg] = useState({ tot: 0, avg: 0 });
+    const [accIndvStat, setAccIndvStat] = useState(null);
+
+    function accountIndvStats(e) {
+        console.log(e.reimb);
+        if (accIndvStat == null) {
+            setAccIndvStat(e);
+        }
+        else if (accIndvStat != null && accIndvStat.accountID === e.accountID) {
+            setAccIndvStat(null);
+        }
+        else if (accIndvStat != null && accIndvStat.accountID !== e.accountID) {
+            setAccIndvStat(e);
+        }
+
+    }
+
+    useEffect(() => {
+        let tot = 0;
+        let avg = 0;
+        let counter = 0;
+        for (const c of props.stat) {
+            tot += c.totalAmount;
+            counter += c.reimb.length;
+        }
+        avg = tot / counter;
+        setTotAvg({ tot, avg });
+    }, [])
+    return (<div className="containerStat">
+        <h1 className="titleBar">Reimbursements Statistics</h1>
+        <ul className='totAvg'><li>Total Cost of Reimbursements: {totAvg.tot}</li>
+            <li>Average cost of Reimbursements: {totAvg.avg}</li>
+        </ul>
+        <BarChart className="barChart"
+            width={580}
+            height={380}
+            layout='vertical'
+            data={props.stat}
+            margin={{
+                top: -2,
+                right: 0,
+                left: -5,
+                bottom: 5,
+            }}>
+            <XAxis type="number" />
+            <YAxis type='category' dataKey="fname" />
+            <Tooltip />
+            <Legend verticalAlign="bottom" />
+            <Bar dataKey="totalAmount" fill="#8884d8" onClick={accountIndvStats} />
+        </BarChart>
+        {accIndvStat ? <AreaChart
+            width={700}
+            height={400}
+            data={accIndvStat.reimb}
+            margin={{
+                top: 2,
+                right: 0,
+                left: -5,
+                bottom: 0,
+            }}
+        >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" type='category' />
+            <YAxis type="number" />
+            <Tooltip content={<CustomTooltip />} />
+            <Area type="monotone" dataKey="amount" stroke="#8884d8" fill="#8884d8" />
+        </AreaChart> : <></>}
+    </div>)
+}
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="custom-tooltip">
+                <p>{`Name: ${label}`}</p>
+                <p>{`Amount: ${payload[0].value}`}</p>
+            </div>
+        );
+    }
+
+    return null;
+};
