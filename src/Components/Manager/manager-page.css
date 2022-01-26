@@ -3,7 +3,7 @@
     /* background-color: #3f0d12; */
     /* background-image: linear-gradient(315deg, #2f0000 10%, #ff004c 60%); */
     background-color: #cccccc;
-    background-image: url('..\\..\\..\\man_Background.gif');
+    background-image: url("https://jtkbackgroundimgs.blob.core.windows.net/jtkreimbursementbackgrounds/man_Background.gif");
     background-repeat: repeat;
     background-size:cover;
     height:100%;
