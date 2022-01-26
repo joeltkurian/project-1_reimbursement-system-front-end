@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import './login-page.css'
 
 export default function LoginPage(props) {

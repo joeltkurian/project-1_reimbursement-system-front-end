@@ -37,6 +37,7 @@ export default function NewReimbursement() {
         <div className="newRemContainer">
             <input ref={name} type="text" className="reimbursename" placeholder="Reason" />
             <input ref={amount} type="text" className="amount" placeholder="Amount" />
+            <input type="file" className="fileUp" />
             <button onClick={addReimbursement} className="submit">Submit</button>
         </div>
     </>);

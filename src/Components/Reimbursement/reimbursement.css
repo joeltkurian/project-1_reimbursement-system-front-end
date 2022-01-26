@@ -35,16 +35,51 @@ th{
     backdrop-filter: blur(10px);
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     gap: 15px 15px;
     grid-auto-flow: row;
     grid-template-areas:
       " reimbursename amount"
+      " fileUp ."
       " submit submit";
 }
 
 .reimbursename{
     grid-area: reimbursename;
+    color:rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.03);
+    box-shadow: 0 2px 2px rgba(0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    width: auto;
+    font-size: 30px;
+    text-align: center;
+    border-radius: 10px;
+    padding: auto;
+    backdrop-filter: blur(10px);
+}
+::-webkit-file-upload-button {
+    color:rgba(255,255,255,0.6);
+    background-color: rgba(255,255,255,0.03);
+    box-shadow: 0 5px 5px rgba(0,0,0.2);
+    margin: 1%;
+    font-size: 25px;
+    letter-spacing: 1px;
+    transition: 0.5s;
+    text-align: center;
+    border-radius: 10px;
+    padding: 3px;
+    backdrop-filter: blur(10px);
+}
+::-webkit-file-upload-button:hover {
+    letter-spacing: 4px;
+    background-color: rgba(120, 120, 120, 0.3);
+    color: rgba(255,255,255,1);
+  }
+  ::-webkit-file-upload-button:active{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.fileUp{
+    grid-area: fileUp;
     color:rgba(255,255,255,0.6);
     background-color: rgba(255,255,255,0.03);
     box-shadow: 0 2px 2px rgba(0,0,0.2);
