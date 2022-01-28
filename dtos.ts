@@ -9,7 +9,8 @@ export interface Reimbursement {
     },
     id: string,
     status: string,
-    statusComment?: string
+    statusComment?: string,
+    formData,
 }
 
 export interface AccountStatistics {

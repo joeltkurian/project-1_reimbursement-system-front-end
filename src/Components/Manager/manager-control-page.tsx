@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Text, AreaChart, CartesianGrid, Area, Label } from 'recharts';
 import { AccountStatistics, Reimbursement } from "../../../dtos";
+import { ShowForm } from "../Reimbursement/past-reimbursement";
 
 export default function ManagerControlPage() {
 
@@ -49,8 +50,9 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
 }
 
 export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Function, reimbArr: Reimbursement[], index: number }) {
-    const { id, name, amount, account, status, statusComment } = props.reimb;
+    const { id, name, amount, account, status, statusComment, formData } = props.reimb;
     const [sAndC, setsAndC] = useState(true);
+    const [nameFile, setNameFile] = useState(true);
     const commentInput = useRef(null);
     async function appDen(statusCode: string) {
         // console.log(statusCode + commentInput.current.value);
@@ -76,7 +78,11 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
     return (<tr>
         <td>{account.fname}</td>
         <td>{account.lname}</td>
-        <td>{name}</td>
+        <td>
+            {formData ?
+                <div className="nameFile" onClick={() => { setNameFile(nameFile ? false : true) }}>{nameFile != true ? <ShowForm file={formData} nameFile={nameFile} setNameFile={setNameFile} /> : name}</div>
+                : `${name}`
+            }</td>
         <td>${amount.toLocaleString('en-US')}</td>
         <td>{status === "" ? <div className="containerAPDEN"><button onClick={() => { appDen('approved') }} className="apprBtn">Approve</button><button onClick={() => { appDen('denied') }} className="denBtn">Deny</button><input className="commentInput" ref={commentInput} placeholder="comments" /></div> :
             <div className="statCommentLabel" onMouseOver={() => { setsAndC(false) }}
