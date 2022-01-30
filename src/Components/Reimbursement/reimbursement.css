@@ -214,3 +214,18 @@ th{
  .submit:active{
     background-color: rgba(0, 0, 0, 0.5);
 }
+.loaderNewReimb{
+    margin: auto;
+    padding: auto;
+    display:inline;
+    width: auto;
+    height: auto;
+    grid-area: submit;
+}
+.loaderDefaultDiv{
+    margin: auto;
+    padding:25px;
+    display:auto;
+    width:auto;
+    height:auto;
+}

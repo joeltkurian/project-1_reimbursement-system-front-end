@@ -1,29 +1,41 @@
 import "./reimbursement.css"
 import { Reimbursement } from "../../../dtos";
 import { useEffect, useState } from "react";
+import { RiseLoader } from "react-spinners";
+import { override } from "../Login/login-page";
 
 export default function PastReimbursement(props: { reimbursement: Reimbursement[], setReimbursement: Function }) {
-
+    const [loading, setLoading] = useState(false);
     const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
     async function GetReimbursements() {
+        setLoading(true);
         const accountId = sessionStorage.getItem("accountId");
-        const response = await fetch(`http://localhost:5000/reimbursement/${accountId}/false`);
+        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/false`);
         const reimbursement: Reimbursement[] = await response.json();
-        props.setReimbursement(reimbursement);
+        if (response.status == 250 || response.status == 200) {
+            setLoading(false);
+            props.setReimbursement(reimbursement);
+        } else {
+            setLoading(false);
+            console.log("ERROR");
+        }
     }
 
     useEffect(() => {
         GetReimbursements();
     }, [])
-
-    if (props.reimbursement.length != 0) {
-        return (<table>
-            <thead><tr><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
-            <tbody>{tableRows}</tbody>
-        </table>);
+    if (loading) {
+        return (<div className="loaderDefaultDiv"><RiseLoader css={override} color="white" size={50} /></div>)
     } else {
-        return (<h1>No Reimbursements under this account!</h1>)
+        if (props.reimbursement.length != 0) {
+            return (<table>
+                <thead><tr><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
+                <tbody>{tableRows}</tbody>
+            </table>);
+        } else {
+            return (<h1>No Reimbursements under this account!</h1>)
+        }
     }
 }
 

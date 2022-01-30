@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { BeatLoader } from "react-spinners";
+import { override } from "../Login/login-page";
 export default function NewReimbursement() {
 
     const name = useRef(null);
@@ -6,8 +8,8 @@ export default function NewReimbursement() {
     const [confirm, setConfirm] = useState('');
     const [fileBinary, setfileBinary] = useState(null);
     const [filePicked, setFilePicked] = useState(false);
-
     const [result, setResult] = useState(null);
+    const [loadingFetch, setLoading] = useState(false);
 
     const fileChange = async (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -20,6 +22,7 @@ export default function NewReimbursement() {
 
                 let read = String(reader.result);
                 setfileBinary(read);
+                console.log(read);
 
                 function dataURLtoBlob(dataurl) {
                     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
@@ -40,7 +43,7 @@ export default function NewReimbursement() {
     }
 
     async function addReimbursement() {
-
+        setLoading(true);
         if (name.current.value != '' && amount.current.value != '') {
             const reimbursementPayLoad = {
                 accountId: sessionStorage.getItem("accountId"),
@@ -48,21 +51,24 @@ export default function NewReimbursement() {
                 amount: amount.current.value,
                 formData: fileBinary,
             }
-            const response = await fetch('http://localhost:5000/reimbursement', {
+            const response = await fetch('https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement', {
                 method: 'POST',
                 body: JSON.stringify(reimbursementPayLoad),
                 headers: {
                     'Content-Type': "application/json"
                 }
             })
-            if (await response.status == 201) {
+            if (response.status == 201) {
+                setLoading(false);
                 setConfirm("Created Reimbursement");
             }
             else {
+                setLoading(false);
                 setConfirm(await response.text());
             }
         }
         else {
+            setLoading(false);
             setConfirm("Please enter Reason and Amount!");
         }
     }
@@ -73,7 +79,9 @@ export default function NewReimbursement() {
             <input ref={name} type="text" className="reimbursename" placeholder="Reason" />
             <input ref={amount} type="text" className="amount" placeholder="Amount" />
             <input type="file" className="fileUp" onChange={fileChange} />
-            <button onClick={addReimbursement} className="submit">Submit</button>
+            {loadingFetch ? <div className="loaderNewReimb"><BeatLoader css={override} size={15} color="#ffffff" /><BeatLoader css={override} size={15} color="#ffffff" /><BeatLoader css={override} size={15} color="#ffffff" /></div> :
+                <button onClick={addReimbursement} className="submit">Submit</button>
+            }
             {filePicked ? <div className='iframeContainer'>{result.type.includes('image') ?
                 <img className="loadedImg" src={result.image}></img> :
                 < iframe className="loadedImg" src={result.image} />

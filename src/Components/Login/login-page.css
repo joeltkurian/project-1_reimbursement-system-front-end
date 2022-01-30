@@ -174,3 +174,11 @@
 .Btn:hover:after{
 	left: 100%;
 }
+.loader{
+    margin: auto;
+    padding: auto;
+    display:inline;
+    width: auto;
+    height: auto;
+    grid-area: loginBtn;
+}

@@ -1,7 +1,8 @@
-
 import { useEffect, useRef, useState } from "react";
+import { GridLoader, ScaleLoader } from "react-spinners";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Text, AreaChart, CartesianGrid, Area, Label } from 'recharts';
 import { AccountStatistics, Reimbursement } from "../../../dtos";
+import { override } from "../Login/login-page";
 import { ShowForm } from "../Reimbursement/past-reimbursement";
 
 export default function ManagerControlPage() {
@@ -22,30 +23,42 @@ export default function ManagerControlPage() {
 
 export function AllReimbursement(props: { reimbursement: Reimbursement[], setReimbursement: Function }) {
 
+    const [loading, setLoading] = useState(false);
     const tableRows = props.reimbursement.map((r, i) => <ReimbursementRow key={r.id} reimb={r} setReimb={props.setReimbursement} reimbArr={props.reimbursement} index={i} />)
     // const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
     async function GetAllReimbursements() {
+        setLoading(true);
         const accountId = sessionStorage.getItem("accountId");
-        const response = await fetch(`http://localhost:5000/reimbursement/${accountId}/true`);
+        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/true`);
         const reimbursement: Reimbursement[] = await response.json();
         //console.log(reimbursement);
         props.setReimbursement(reimbursement);
+        if (response.status == 250 || response.status == 200) {
+            setLoading(false);
+            props.setReimbursement(reimbursement);
+        } else {
+            setLoading(false);
+            console.log("ERROR");
+        }
     }
 
     useEffect(() => {
         GetAllReimbursements();
     }, []);
-
-    if (props.reimbursement.length != 0) {
-        return (<div className="reimScroll">
-            <table>
-                <thead><tr><th>First Name</th><th>Last Name</th><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
-                <tbody>{tableRows}</tbody>
-            </table>
-        </div>);
+    if (loading) {
+        return (<div className="loaderDefaultDiv"><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /></div>)
     } else {
-        return (<h1>No Approved Reimbursements Present!</h1>)
+        if (props.reimbursement.length != 0) {
+            return (<div className="reimScroll">
+                <table>
+                    <thead><tr><th>First Name</th><th>Last Name</th><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
+                    <tbody>{tableRows}</tbody>
+                </table>
+            </div>);
+        } else {
+            return (<h1>No Approved Reimbursements Present!</h1>)
+        }
     }
 }
 
@@ -59,7 +72,7 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
         const reimbursementUpdate = {
             statusComment: commentInput.current.value
         }
-        const response = await fetch(`http://localhost:5000/reimbursement/${id}/${statusCode}`,
+        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${id}/${statusCode}`,
             {
                 method: 'PATCH',
                 body: JSON.stringify(reimbursementUpdate),
@@ -90,13 +103,13 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
     </tr>)
 }
 
-//---------------------WORKING------------------------------------------//
+//---------------------STATISTICS PAGE------------------------------------------//
 
 export function StatisticsPage() {
     const [stat, setStat] = useState(null);
 
     async function getStats() {
-        const response = await fetch(`http://localhost:5000/manager/statistics`);
+        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/manager/statistics`);
         if (response.status === 200) {
             const stats: AccountStatistics[] = await response.json();
             setStat(stats);
@@ -106,7 +119,8 @@ export function StatisticsPage() {
         getStats();
     }, []);
 
-    return (stat ? <StatStuff stat={stat} /> : <></>)
+    return (stat ? stat.length != 0 ? <StatStuff stat={stat} /> : <h1>No Reimbursements Approved</h1>
+        : <div className="loaderDefaultDiv"><GridLoader color="white" css={override} size={40} /></div>)
 }
 
 export function StatStuff(props: { stat: AccountStatistics[] }) {
@@ -136,9 +150,11 @@ export function StatStuff(props: { stat: AccountStatistics[] }) {
             tot += c.totalAmount;
             counter += c.reimb.length;
         }
-        avg = tot / counter;
+        avg = Number((tot / counter).toFixed(2));
         setTotAvg({ tot, avg });
-    }, [])
+    }, []);
+
+
     return (<div className="containerStat">
         <h1 className="titleBar">Reimbursements Statistics</h1>
         <ul className='totAvg'><li>Total Cost of Reimbursements: {totAvg.tot}</li>
