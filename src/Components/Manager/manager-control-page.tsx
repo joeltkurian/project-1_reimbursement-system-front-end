@@ -22,7 +22,7 @@ export default function ManagerControlPage() {
 }
 
 export function AllReimbursement(props: { reimbursement: Reimbursement[], setReimbursement: Function }) {
-
+    const { setReimbursement } = props;
     const [loading, setLoading] = useState(false);
     const tableRows = props.reimbursement.map((r, i) => <ReimbursementRow key={r.id} reimb={r} setReimb={props.setReimbursement} reimbArr={props.reimbursement} index={i} />)
     // const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
@@ -37,13 +37,13 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
             props.setReimbursement(reimbursement);
             if (response.status === 250 || response.status === 200) {
                 setLoading(false);
-                props.setReimbursement(reimbursement);
+                setReimbursement(reimbursement);
             } else {
                 setLoading(false);
                 console.log("ERROR");
             }
         })();
-    }, []);
+    }, [setReimbursement]);
 
     if (loading) {
         return (<div className="loaderDefaultDiv"><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /></div>)

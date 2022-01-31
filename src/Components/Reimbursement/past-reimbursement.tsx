@@ -5,6 +5,7 @@ import { RiseLoader } from "react-spinners";
 import { override } from "../Login/login-page";
 
 export default function PastReimbursement(props: { reimbursement: Reimbursement[], setReimbursement: Function }) {
+    const { setReimbursement } = props;
     const [loading, setLoading] = useState(false);
     const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
@@ -16,13 +17,13 @@ export default function PastReimbursement(props: { reimbursement: Reimbursement[
             const reimbursement: Reimbursement[] = await response.json();
             if (response.status === 250 || response.status === 200) {
                 setLoading(false);
-                props.setReimbursement(reimbursement);
+                setReimbursement(reimbursement);
             } else {
                 setLoading(false);
                 console.log("ERROR");
             }
         })();
-    }, [props.setReimbursement]);
+    }, [setReimbursement]);
 
     if (loading) {
         return (<div className="loaderDefaultDiv"><RiseLoader css={override} color="white" size={50} /></div>)
