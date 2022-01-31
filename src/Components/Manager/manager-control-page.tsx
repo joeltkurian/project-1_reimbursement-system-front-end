@@ -34,7 +34,7 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
             const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/true`);
             const reimbursement: Reimbursement[] = await response.json();
             //console.log(reimbursement);
-            props.setReimbursement(reimbursement);
+            setReimbursement(reimbursement);
             if (response.status === 250 || response.status === 200) {
                 setLoading(false);
                 setReimbursement(reimbursement);
