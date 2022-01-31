@@ -15,9 +15,7 @@ export default function NewReimbursement() {
         if (event.target.files && event.target.files[0]) {
             let file = event.target.files[0];
             let reader = new FileReader();
-
             reader.readAsDataURL(file);
-
             reader.onload = ev => {
 
                 let read = String(reader.result);
@@ -39,6 +37,10 @@ export default function NewReimbursement() {
                 });
                 setFilePicked(true);
             };
+        } else {
+            setFilePicked(false);
+            setfileBinary(null);
+            setResult(null);
         }
     }
 
