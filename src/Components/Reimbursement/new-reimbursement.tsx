@@ -83,8 +83,8 @@ export default function NewReimbursement() {
                 <button onClick={addReimbursement} className="submit">Submit</button>
             }
             {filePicked ? <div className='iframeContainer'>{result.type.includes('image') ?
-                <img className="loadedImg" src={result.image} alt="file Image"></img> :
-                < iframe className="loadedImg" src={result.image} title="File Image" />
+                <img className="loadedImg" src={result.image} alt="rendered a file"></img> :
+                < iframe className="loadedImg" src={result.image} title="loaded file" />
             }</div> : <></>}
         </div>
     </>);

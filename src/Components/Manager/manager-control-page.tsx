@@ -27,24 +27,22 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
     const tableRows = props.reimbursement.map((r, i) => <ReimbursementRow key={r.id} reimb={r} setReimb={props.setReimbursement} reimbArr={props.reimbursement} index={i} />)
     // const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
-    async function GetAllReimbursements() {
-        setLoading(true);
-        const accountId = sessionStorage.getItem("accountId");
-        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/true`);
-        const reimbursement: Reimbursement[] = await response.json();
-        //console.log(reimbursement);
-        props.setReimbursement(reimbursement);
-        if (response.status === 250 || response.status === 200) {
-            setLoading(false);
-            props.setReimbursement(reimbursement);
-        } else {
-            setLoading(false);
-            console.log("ERROR");
-        }
-    }
-
     useEffect(() => {
-        GetAllReimbursements();
+        (async () => {
+            setLoading(true);
+            const accountId = sessionStorage.getItem("accountId");
+            const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/true`);
+            const reimbursement: Reimbursement[] = await response.json();
+            //console.log(reimbursement);
+            props.setReimbursement(reimbursement);
+            if (response.status === 250 || response.status === 200) {
+                setLoading(false);
+                props.setReimbursement(reimbursement);
+            } else {
+                setLoading(false);
+                console.log("ERROR");
+            }
+        })();
     }, []);
 
     if (loading) {
@@ -94,7 +92,7 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
         <td>{account.lname}</td>
         <td>
             {formData ?
-                <div className="nameFile" onClick={() => { setNameFile(nameFile ? false : true) }}>{nameFile != true ? <ShowForm file={formData} nameFile={nameFile} setNameFile={setNameFile} /> : name}</div>
+                <div className="nameFile" onClick={() => { setNameFile(nameFile ? false : true) }}>{nameFile !== true ? <ShowForm file={formData} nameFile={nameFile} setNameFile={setNameFile} /> : name}</div>
                 : `${name}`
             }</td>
         <td>${amount.toLocaleString('en-US')}</td>

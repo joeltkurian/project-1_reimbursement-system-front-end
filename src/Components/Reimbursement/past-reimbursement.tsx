@@ -22,7 +22,7 @@ export default function PastReimbursement(props: { reimbursement: Reimbursement[
                 console.log("ERROR");
             }
         })();
-    }, []);
+    }, [props.setReimbursement]);
 
     if (loading) {
         return (<div className="loaderDefaultDiv"><RiseLoader css={override} color="white" size={50} /></div>)
@@ -77,7 +77,7 @@ export function ShowForm(props: { file, nameFile, setNameFile }) {
     }
 
     return (<div className={`loadedFileContainer`}>{type.includes('image') ?
-        <img onClick={changeNameFile} className="loadedFile" src={url} alt="loaded Image" /> :
+        <img onClick={changeNameFile} className="loadedFile" src={url} alt="rendered the uploaded file" /> :
         <><embed id="something" className="loadedFile" src={url} /><button className="close">X</button></>
     }</div>);
 
