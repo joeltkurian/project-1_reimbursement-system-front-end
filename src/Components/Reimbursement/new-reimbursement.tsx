@@ -44,7 +44,7 @@ export default function NewReimbursement() {
 
     async function addReimbursement() {
         setLoading(true);
-        if (name.current.value != '' && amount.current.value != '') {
+        if (name.current.value !== '' && amount.current.value !== '') {
             const reimbursementPayLoad = {
                 accountId: sessionStorage.getItem("accountId"),
                 name: name.current.value,
@@ -58,7 +58,7 @@ export default function NewReimbursement() {
                     'Content-Type': "application/json"
                 }
             })
-            if (response.status == 201) {
+            if (response.status === 201) {
                 setLoading(false);
                 setConfirm("Created Reimbursement");
             }
@@ -83,8 +83,8 @@ export default function NewReimbursement() {
                 <button onClick={addReimbursement} className="submit">Submit</button>
             }
             {filePicked ? <div className='iframeContainer'>{result.type.includes('image') ?
-                <img className="loadedImg" src={result.image}></img> :
-                < iframe className="loadedImg" src={result.image} />
+                <img className="loadedImg" src={result.image} alt="file Image"></img> :
+                < iframe className="loadedImg" src={result.image} title="File Image" />
             }</div> : <></>}
         </div>
     </>);

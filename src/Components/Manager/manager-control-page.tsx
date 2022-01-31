@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { GridLoader, ScaleLoader } from "react-spinners";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, Text, AreaChart, CartesianGrid, Area, Label } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, AreaChart, CartesianGrid, Area } from 'recharts';
 import { AccountStatistics, Reimbursement } from "../../../dtos";
 import { override } from "../Login/login-page";
 import { ShowForm } from "../Reimbursement/past-reimbursement";
@@ -34,7 +34,7 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
         const reimbursement: Reimbursement[] = await response.json();
         //console.log(reimbursement);
         props.setReimbursement(reimbursement);
-        if (response.status == 250 || response.status == 200) {
+        if (response.status === 250 || response.status === 200) {
             setLoading(false);
             props.setReimbursement(reimbursement);
         } else {
@@ -46,10 +46,11 @@ export function AllReimbursement(props: { reimbursement: Reimbursement[], setRei
     useEffect(() => {
         GetAllReimbursements();
     }, []);
+
     if (loading) {
         return (<div className="loaderDefaultDiv"><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /><ScaleLoader css={override} color="white" /></div>)
     } else {
-        if (props.reimbursement.length != 0) {
+        if (props.reimbursement.length !== 0) {
             return (<div className="reimScroll">
                 <table>
                     <thead><tr><th>First Name</th><th>Last Name</th><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
@@ -80,7 +81,7 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
                     'Content-Type': "application/json"
                 }
             })
-        if (response.status != 200) {
+        if (response.status !== 200) {
             alert(await response.text());
         }
         let r = await response.json();
@@ -99,7 +100,7 @@ export function ReimbursementRow(props: { reimb: Reimbursement, setReimb: Functi
         <td>${amount.toLocaleString('en-US')}</td>
         <td>{status === "" ? <div className="containerAPDEN"><button onClick={() => { appDen('approved') }} className="apprBtn">Approve</button><button onClick={() => { appDen('denied') }} className="denBtn">Deny</button><input className="commentInput" ref={commentInput} placeholder="comments" /></div> :
             <div className="statCommentLabel" onMouseOver={() => { setsAndC(false) }}
-                onMouseLeave={() => { setsAndC(true) }}>{sAndC != true && statusComment ? statusComment : status}</div>}</td>
+                onMouseLeave={() => { setsAndC(true) }}>{sAndC !== true && statusComment ? statusComment : status}</div>}</td>
     </tr>)
 }
 
@@ -119,7 +120,7 @@ export function StatisticsPage() {
         getStats();
     }, []);
 
-    return (stat ? stat.length != 0 ? <StatStuff stat={stat} /> : <h1>No Reimbursements Approved</h1>
+    return (stat ? stat.length !== 0 ? <StatStuff stat={stat} /> : <h1>No Reimbursements Approved</h1>
         : <div className="loaderDefaultDiv"><GridLoader color="white" css={override} size={40} /></div>)
 }
 
@@ -130,7 +131,7 @@ export function StatStuff(props: { stat: AccountStatistics[] }) {
 
     function accountIndvStats(e) {
         console.log(e.reimb);
-        if (accIndvStat == null) {
+        if (accIndvStat === null) {
             setAccIndvStat(e);
         }
         else if (accIndvStat != null && accIndvStat.accountID === e.accountID) {
@@ -152,7 +153,7 @@ export function StatStuff(props: { stat: AccountStatistics[] }) {
         }
         avg = Number((tot / counter).toFixed(2));
         setTotAvg({ tot, avg });
-    }, []);
+    }, [props.stat]);
 
 
     return (<div className="containerStat">

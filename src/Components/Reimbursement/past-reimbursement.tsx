@@ -8,27 +8,26 @@ export default function PastReimbursement(props: { reimbursement: Reimbursement[
     const [loading, setLoading] = useState(false);
     const tableRows = props.reimbursement.map(r => <ReimbursementRow key={r.id} {...r} />)
 
-    async function GetReimbursements() {
-        setLoading(true);
-        const accountId = sessionStorage.getItem("accountId");
-        const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/false`);
-        const reimbursement: Reimbursement[] = await response.json();
-        if (response.status == 250 || response.status == 200) {
-            setLoading(false);
-            props.setReimbursement(reimbursement);
-        } else {
-            setLoading(false);
-            console.log("ERROR");
-        }
-    }
-
     useEffect(() => {
-        GetReimbursements();
-    }, [])
+        (async () => {
+            setLoading(true);
+            const accountId = sessionStorage.getItem("accountId");
+            const response = await fetch(`https://jtk-reimbursement-app-back-end.azurewebsites.net/reimbursement/${accountId}/false`);
+            const reimbursement: Reimbursement[] = await response.json();
+            if (response.status === 250 || response.status === 200) {
+                setLoading(false);
+                props.setReimbursement(reimbursement);
+            } else {
+                setLoading(false);
+                console.log("ERROR");
+            }
+        })();
+    }, []);
+
     if (loading) {
         return (<div className="loaderDefaultDiv"><RiseLoader css={override} color="white" size={50} /></div>)
     } else {
-        if (props.reimbursement.length != 0) {
+        if (props.reimbursement.length !== 0) {
             return (<table>
                 <thead><tr><th>Reimbursement</th><th>Amount</th><th>Status/Comment</th></tr></thead>
                 <tbody>{tableRows}</tbody>
@@ -40,20 +39,20 @@ export default function PastReimbursement(props: { reimbursement: Reimbursement[
 }
 
 export function ReimbursementRow(props: Reimbursement) {
-    const { id, name, amount, status, statusComment, formData } = props;
+    const { name, amount, status, statusComment, formData } = props;
     const [nameFile, setNameFile] = useState(true);
     const [sAndC, setsAndC] = useState(true);
     return (<tr>
         <td>
             {formData ?
-                <div className="nameFile" onClick={() => { setNameFile(nameFile ? false : true) }}>{nameFile != true ? <ShowForm file={formData} nameFile={nameFile} setNameFile={setNameFile} /> : name}</div>
+                <div className="nameFile" onClick={() => { setNameFile(nameFile ? false : true) }}>{nameFile !== true ? <ShowForm file={formData} nameFile={nameFile} setNameFile={setNameFile} /> : name}</div>
                 : `${name}`
             }</td>
 
         <td>${amount.toLocaleString('en-US')}</td>
         <td>{status === "" ? 'Not Checked' :
             <div className="statCommentLabel" onMouseOver={() => { setsAndC(false) }}
-                onMouseLeave={() => { setsAndC(true) }}>{sAndC != true && statusComment ? statusComment : status}</div>}</td>
+                onMouseLeave={() => { setsAndC(true) }}>{sAndC !== true && statusComment ? statusComment : status}</div>}</td>
     </tr>)
 }
 
@@ -78,7 +77,7 @@ export function ShowForm(props: { file, nameFile, setNameFile }) {
     }
 
     return (<div className={`loadedFileContainer`}>{type.includes('image') ?
-        <img onClick={changeNameFile} className="loadedFile" src={url} /> :
+        <img onClick={changeNameFile} className="loadedFile" src={url} alt="loaded Image" /> :
         <><embed id="something" className="loadedFile" src={url} /><button className="close">X</button></>
     }</div>);
 
