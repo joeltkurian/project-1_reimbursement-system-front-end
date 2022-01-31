@@ -138,8 +138,10 @@
 
 .Btn {
     margin: auto;
+    position: absolute;
     padding: auto;
     border-radius: 15px;
+    right:15px;
     background: rgba(255,255,255,.1);
 	  box-shadow: 0 5px 5px rgba(0,0,0.2);
     backdrop-filter: blur(30px);
@@ -150,9 +152,6 @@
     letter-spacing: 1px;
     transition:0.5s;
     text-transform: uppercase;
-    width: 70%;
-    height: 90%;
-    grid-area: loginBtn;
 }
 .Btn:after{
 	content: '';
